@@ -178,7 +178,8 @@ pv2_power=$(jq -r '.data.pvIV[1].ppv' pvindata.json); if [ $pv2_power == "null" 
 pv2_voltage=$(jq -r '.data.pvIV[1].vpv' pvindata.json); if [ $pv2_voltage == "null" ]; then pv2_voltage="0"; fi;
 overall_state=$(jq -r '.data.runStatus' inverterinfo.json); if [ $overall_state == "null" ]; then overall_state="0"; fi;
 ups_power=$(jq -r '.data.upsPowerTotal' loaddata.json); if [ $ups_power == "null" ]; then ups_power="0"; fi;
-non_essential_power= $((load_totalpower - ups_power));
+non_essential_power= "0";
+#non_essential_power= $((load_totalpower) - (ups_power));
 
 #Settings Sensors
 prog1_time=$(jq -r '.data.sellTime1' settings.json); 
