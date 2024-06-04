@@ -1,7 +1,7 @@
-name: "SolarSynk"
+name: "SolarSynkTest"
 description: "Home Assistant add-on for syncing solar/inverter data from SynSynk.net"
-version: "2.1.14"
-slug: "solar_synk"
+version: "2.1.14.1"
+slug: "solar_synk_test"
 init: false
 arch:
   - aarch64
