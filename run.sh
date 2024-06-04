@@ -151,7 +151,6 @@ battery2_soc=$(jq -r '.data.batterySoc2' batterydata.json); if [ $battery_capaci
 battery2_temperature=$(jq -r '.data.batteryTemp2' batterydata.json); if [ $battery2_temperature == "null" ]; then battery2_temperature="0"; fi;
 battery2_status=$(jq -r '.data.batteryStatus2' batterydata.json); if [ $battery2_status == "null" ]; then battery2_status="0"; fi;
 
-
 day_battery_charge=$(jq -r '.data.etodayChg' batterydata.json); if [ $day_battery_charge == "null" ]; then day_battery_charge="0"; fi;
 day_battery_discharge=$(jq -r '.data.etodayDischg' batterydata.json); if [ $day_battery_discharge == "null" ]; then day_battery_discharge="0"; fi;
 day_grid_export=$(jq -r '.data.etodayTo' griddata.json); if [ $day_grid_export == "null" ]; then day_grid_export="0"; fi;
