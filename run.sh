@@ -177,6 +177,8 @@ pv2_current=$(jq -r '.data.pvIV[1].ipv' pvindata.json); if [ $pv2_current == "nu
 pv2_power=$(jq -r '.data.pvIV[1].ppv' pvindata.json); if [ $pv2_power == "null" ]; then pv2_power="0"; fi;
 pv2_voltage=$(jq -r '.data.pvIV[1].vpv' pvindata.json); if [ $pv2_voltage == "null" ]; then pv2_voltage="0"; fi;
 overall_state=$(jq -r '.data.runStatus' inverterinfo.json); if [ $overall_state == "null" ]; then overall_state="0"; fi;
+ups_power=$(jq -r '.data.upsPowerTotal' loaddata.json); if [ $ups_power == "null" ]; then ups_power="0"; fi;
+non_essential_power= $((load_totalpower - ups_power));
 
 #Settings Sensors
 prog1_time=$(jq -r '.data.sellTime1' settings.json); 
@@ -353,6 +355,11 @@ curl -s -k -X POST -H "Authorization: Bearer $HA_LongLiveToken" -H "Content-Type
 curl -s -k -X POST -H "Authorization: Bearer $HA_LongLiveToken" -H "Content-Type: application/json" -d '{"attributes": {"device_class": "power", "state_class":"measurement", "unit_of_measurement": "W", "friendly_name": "Load Power"}, "state": "'"$load_power"'"}' $HTTP_Connect_Type://$Home_Assistant_IP:$Home_Assistant_PORT/api/states/sensor.solarsynk_"$inverter_serial"_load_power $EntityLogOutput
 curl -s -k -X POST -H "Authorization: Bearer $HA_LongLiveToken" -H "Content-Type: application/json" -d '{"attributes": {"device_class": "power", "state_class":"measurement", "unit_of_measurement": "W", "friendly_name": "Load Total Power"}, "state": "'"$load_totalpower"'"}' $HTTP_Connect_Type://$Home_Assistant_IP:$Home_Assistant_PORT/api/states/sensor.solarsynk_"$inverter_serial"_load_totalpower $EntityLogOutput
 curl -s -k -X POST -H "Authorization: Bearer $HA_LongLiveToken" -H "Content-Type: application/json" -d '{"attributes": {"device_class": "voltage", "state_class":"measurement", "unit_of_measurement": "V", "friendly_name": "Load Voltage"}, "state": "'"$load_voltage"'"}' $HTTP_Connect_Type://$Home_Assistant_IP:$Home_Assistant_PORT/api/states/sensor.solarsynk_"$inverter_serial"_load_voltage $EntityLogOutput
+#UPS
+curl -s -k -X POST -H "Authorization: Bearer $HA_LongLiveToken" -H "Content-Type: application/json" -d '{"attributes": {"device_class": "power", "state_class":"measurement", "unit_of_measurement": "W", "friendly_name": "Grid Power"}, "state": "'"$ups_power"'"}' $HTTP_Connect_Type://$Home_Assistant_IP:$Home_Assistant_PORT/api/states/sensor.solarsynk_"$inverter_serial"_ups_power $EntityLogOutput
+curl -s -k -X POST -H "Authorization: Bearer $HA_LongLiveToken" -H "Content-Type: application/json" -d '{"attributes": {"device_class": "power", "state_class":"measurement", "unit_of_measurement": "W", "friendly_name": "Grid Power"}, "state": "'"$non_essential_power"'"}' $HTTP_Connect_Type://$Home_Assistant_IP:$Home_Assistant_PORT/api/states/sensor.solarsynk_"$inverter_serial"non_essential_power $EntityLogOutput
+
+
 #SolarPanels
 curl -s -k -X POST -H "Authorization: Bearer $HA_LongLiveToken" -H "Content-Type: application/json" -d '{"attributes": {"device_class": "current", "state_class":"measurement", "unit_of_measurement": "A", "friendly_name": "PV1 Current"}, "state": "'"$pv1_current"'"}' $HTTP_Connect_Type://$Home_Assistant_IP:$Home_Assistant_PORT/api/states/sensor.solarsynk_"$inverter_serial"_pv1_current $EntityLogOutput
 curl -s -k -X POST -H "Authorization: Bearer $HA_LongLiveToken" -H "Content-Type: application/json" -d '{"attributes": {"device_class": "power", "state_class":"measurement", "unit_of_measurement": "W", "friendly_name": "PV1 Power"}, "state": "'"$pv1_power"'"}' $HTTP_Connect_Type://$Home_Assistant_IP:$Home_Assistant_PORT/api/states/sensor.solarsynk_"$inverter_serial"_pv1_power $EntityLogOutput
