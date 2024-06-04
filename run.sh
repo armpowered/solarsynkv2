@@ -181,10 +181,10 @@ pv2_voltage=$(jq -r '.data.pvIV[1].vpv' pvindata.json); if [ $pv2_voltage == "nu
 overall_state=$(jq -r '.data.runStatus' inverterinfo.json); if [ $overall_state == "null" ]; then overall_state="0"; fi;
 
 #Flow Sensors
-gridOrMeterPower=$(jq -r '.data.gridOrMeterPower' flowdata.json); if [ $ups_power == "null" ]; then ups_power="0"; fi;
-loadOrEpsPower=$(jq -r '.data.loadOrEpsPower' flowdata.json); if [ $ups_power == "null" ]; then ups_power="0"; fi;
-upsLoadPower=$(jq -r '.data.upsLoadPower' flowdata.json); if [ $ups_power == "null" ]; then ups_power="0"; fi;
-homeLoadPower=$(jq -r '.data.homeLoadPower' flowdata.json); if [ $ups_power == "null" ]; then ups_power="0"; fi;
+gridOrMeterPower=$(jq -r '.data.gridOrMeterPower' flowdata.json); if [ $gridOrMeterPower == "null" ]; then gridOrMeterPower="0"; fi;
+loadOrEpsPower=$(jq -r '.data.loadOrEpsPower' flowdata.json); if [ $loadOrEpsPower == "null" ]; then loadOrEpsPower="0"; fi;
+upsLoadPower=$(jq -r '.data.upsLoadPower' flowdata.json); if [ $upsLoadPower == "null" ]; then upsLoadPower="0"; fi;
+homeLoadPower=$(jq -r '.data.homeLoadPower' flowdata.json); if [ $homeLoadPower == "null" ]; then homeLoadPower="0"; fi;
 
 
 
