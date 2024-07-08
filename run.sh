@@ -211,7 +211,8 @@ prog6_capacity=$(jq -r '.data.cap6' settings.json);
 
 battery_shutdown_cap=$(jq -r '.data.batteryShutdownCap' settings.json); 
 use_timer=$(jq -r '.data.peakAndVallery' settings.json); 
-priority_load=$(jq -r '.data.energyMode' settings.json); 
+priority_load=$(jq -r '.data.energyMode' settings.json);
+charge_amps=$(jq -r '.data.batteryMaxCurrentCharge' settings.json); 
 
 dc_temp=$(jq -r '.data.infos[0].records[-1].value' dcactemp.json)
 ac_temp=$(jq -r '.data.infos[1].records[-1].value' dcactemp.json)
@@ -307,6 +308,7 @@ echo "prog6_capacity:" $prog6_capacity
 echo "battery_shutdown_cap:" $battery_shutdown_cap
 echo "use_timer:" $use_timer
 echo "priority_load:" $priority_load
+echo "charge_amps:" $charge_amps
 #Temperature
 echo "dc_temp:" $dc_temp
 echo "ac_temp:" $ac_temp
@@ -408,6 +410,9 @@ curl -s -k -X POST -H "Authorization: Bearer $HA_LongLiveToken" -H "Content-Type
 curl -s -k -X POST -H "Authorization: Bearer $HA_LongLiveToken" -H "Content-Type: application/json" -d '{"attributes": {"device_class": "power_factor", "state_class":"measurement", "unit_of_measurement": "%", "friendly_name": "Battery Shutdown_cap"}, "state": "'"$battery_shutdown_cap"'"}' $HTTP_Connect_Type://$Home_Assistant_IP:$Home_Assistant_PORT/api/states/sensor.solarsynk_"$inverter_serial"_battery_shutdown_cap $EntityLogOutput
 curl -s -k -X POST -H "Authorization: Bearer $HA_LongLiveToken" -H "Content-Type: application/json" -d '{"attributes": {"device_class": "time", "state_class":"measurement", "unit_of_measurement": "", "friendly_name": "Use Timer"}, "state": "'"$use_timer"'"}' $HTTP_Connect_Type://$Home_Assistant_IP:$Home_Assistant_PORT/api/states/sensor.solarsynk_"$inverter_serial"_use_timer $EntityLogOutput
 curl -s -k -X POST -H "Authorization: Bearer $HA_LongLiveToken" -H "Content-Type: application/json" -d '{"attributes": {"device_class": "", "state_class":"measurement", "unit_of_measurement": "", "friendly_name": "Priority Load"}, "state": "'"$priority_load"'"}' $HTTP_Connect_Type://$Home_Assistant_IP:$Home_Assistant_PORT/api/states/sensor.solarsynk_"$inverter_serial"_priority_load $EntityLogOutput
+
+#timbo
+curl -s -k -X POST -H "Authorization: Bearer $HA_LongLiveToken" -H "Content-Type: application/json" -d '{"attributes": {"device_class": "", "state_class":"measurement", "unit_of_measurement": "", "friendly_name": "Max Charge Amps"}, "state": "'"$charge_amps"'"}' $HTTP_Connect_Type://$Home_Assistant_IP:$Home_Assistant_PORT/api/states/sensor.solarsynk_"$inverter_serial"_charge_amps $EntityLogOutput
 
 #Other
 curl -s -k -X POST -H "Authorization: Bearer $HA_LongLiveToken" -H "Content-Type: application/json" -d '{"attributes": {"unit_of_measurement": "", "friendly_name": "Inverter Overall State"}, "state": "'"$overall_state"'"}' $HTTP_Connect_Type://$Home_Assistant_IP:$Home_Assistant_PORT/api/states/sensor.solarsynk_"$inverter_serial"_overall_state $EntityLogOutput
