@@ -178,6 +178,11 @@ pv2_current=$(jq -r '.data.pvIV[1].ipv' pvindata.json); if [ $pv2_current == "nu
 pv2_power=$(jq -r '.data.pvIV[1].ppv' pvindata.json); if [ $pv2_power == "null" ]; then pv2_power="0"; fi;
 pv2_voltage=$(jq -r '.data.pvIV[1].vpv' pvindata.json); if [ $pv2_voltage == "null" ]; then pv2_voltage="0"; fi;
 overall_state=$(jq -r '.data.runStatus' inverterinfo.json); if [ $overall_state == "null" ]; then overall_state="0"; fi;
+#timbo
+etotal=$(jq -r '.data.etotal' inverterinfo.json); if [ $etotal == "null" ]; then etotal="0"; fi;
+eyear=$(jq -r '.data.eyear' inverterinfo.json); if [ $eyear == "null" ]; then eyear="0"; fi;
+emonth=$(jq -r '.data.eyear' inverterinfo.json); if [ $emonth == "null" ]; then emonth="0"; fi;
+etoday=$(jq -r '.data.etoday' inverterinfo.json); if [ $etoday == "null" ]; then etoday="0"; fi;
 
 #Flow Sensors
 gridOrMeterPower=$(jq -r '.data.gridOrMeterPower' flowdata.json); if [ $gridOrMeterPower == "null" ]; then gridOrMeterPower="0"; fi;
@@ -283,6 +288,11 @@ echo "pv2_current" $pv2_current
 echo "pv2_power" $pv2_power
 echo "pv2_voltage" $pv2_voltage
 echo "overall_state" $overall_state
+#timbo
+echo "etotal" $etotal
+echo "eyear" $eyear
+echo "emonth" $emonth
+echo "etoday" $etoday
 #Settings Sensors
 echo "prog1_time:" $prog1_time
 echo "prog2_time:" $prog2_time
