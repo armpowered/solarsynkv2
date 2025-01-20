@@ -48,7 +48,6 @@ echo "Bearer Token length:" ${#ServerAPIBearerToken}
 
 #timbo
 if [ "${#ServerAPIBearerToken}" -eq "4" ]
-# i.e. null
 then
       #echo "Retry server api bearer token fetch"
       echo "Null token, exiting"
