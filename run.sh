@@ -48,11 +48,11 @@ echo "Bearer Token length:" ${#ServerAPIBearerToken}
 
 #timbo
 if [ "${#ServerAPIBearerToken}" -eq "4" ]
-# i.e. null
+
 then
       #echo "Retry server api bearer token fetch"
       echo "Null token, exiting"
-      exit
+      exit 0
       #ServerAPIBearerToken=$(curl -s -k -X POST -H "Content-Type: application/json" https://api.sunsynk.net/oauth/token -d '{"areaCode": "sunsynk","client_id": "csp-web","grant_type": "password","password": "'"$sunsynk_pass"'","source": "sunsynk","username": "'"$sunsynk_user"'"}' | jq -r '.data.access_token')
 fi
 
